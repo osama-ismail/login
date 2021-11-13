@@ -1,28 +1,58 @@
-echo "email or password wrong"; 
-
 <?php
-echo "email or password wrong"; 
 
 session_start();
+if(isset($_POST['email'])){
+  $email = $_POST['email'];
+  $pass = $_POST['pass']; 
+  $con = mysqli_connect("localhost","root","","software");
 
-if(isset($_POST['username1'])){
+  $sql = "SELECT * FROM `student` WHERE  `id` = '$email' && `password`='$pass'"; 
+  $q = mysqli_query($con,$sql); 
+  $res = mysqli_fetch_assoc($q);
+if(!empty($res)){
+echo "ok"; 
+  $_SESSION['go']=$res;
+  header("LOCATION:config.php");
+}else{
+  echo "email or password wrong"; 
+  //header("LOCATION:login.php");
+}
+  }
 
-    $username1 = $_POST['username1']; 
-    $password1 = $_POST['password1']; 
-    
-    $con1 = mysqli_connect("localhost","root","","software");
-    
-    $sql = "SELECT `id`, `password` FROM `student` WHERE  `id` = '$username1' && `password`='$password1'";    
-    $q = mysqli_query($con1,$sql1); 
 
-    $res1 = mysqli_fetch_assoc($q);
-
-    if(!empty($res1)){
-        //  $_SESSION['go']=$res1;
-          header("LOCATION:config.php");
-        }else{
-          echo "email or password wrong"; 
-        }
-          }
-        
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>login</title>
+
+
+</head>
+<body>
+<body>
+    
+          <form action="in.php" method="post" >
+              <input type="text" placeholder="Username" name="email" >
+              <input type="password" placeholder="password" name="pass">
+          
+
+
+              <input type="submit" value="Login" >
+          </form>
+
+     </section>
+
+     </header>
+
+
+
+
+
+
+
+</section>
+</body>
+</html>
